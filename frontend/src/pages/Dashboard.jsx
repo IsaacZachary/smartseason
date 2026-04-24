@@ -75,26 +75,26 @@ const Dashboard = () => {
   );
 
   return (
-    <div style={{ padding: '32px', maxWidth: '1400px', margin: '0 auto' }}>
+    <div style={{ padding: '40px', maxWidth: '1400px', margin: '0 auto' }}>
       {/* Header */}
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <img src={logo} alt="SmartSeason Logo" style={{ width: '48px', height: '48px', borderRadius: '10px' }} />
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <img src={logo} alt="SmartSeason Logo" style={{ width: '56px', height: '56px', borderRadius: '12px' }} />
           <div>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: '800', marginBottom: '2px' }}>Dashboard</h1>
+            <h1 style={{ fontSize: '2rem', fontWeight: '800', marginBottom: '4px' }}>Dashboard</h1>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span className="badge badge-active" style={{ fontSize: '0.6rem' }}>{isAdmin ? 'ADMINISTRATOR' : 'AGENT'}</span>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>{user.first_name} {user.last_name} • {new Date().toLocaleDateString()}</p>
+              <span className="badge badge-active" style={{ fontSize: '0.65rem' }}>{isAdmin ? 'ADMINISTRATOR' : 'AGENT'}</span>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{user.first_name} {user.last_name} • {new Date().toLocaleDateString()}</p>
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '6px 12px', borderRadius: '8px', background: '#fff', border: '1px solid var(--border-glass)' }}>
-            <UserIcon size={16} color="var(--text-muted)" />
-            <span style={{ fontSize: '0.8rem', fontWeight: '500' }}>{user.email}</span>
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 16px', borderRadius: '10px', background: '#fff', border: '1px solid var(--border-glass)' }}>
+            <UserIcon size={18} color="var(--text-muted)" />
+            <span style={{ fontSize: '0.85rem', fontWeight: '500' }}>{user.email}</span>
           </div>
-          <button onClick={logout} style={{ padding: '8px', borderRadius: '8px', color: '#EF4444', border: '1px solid #FEE2E2', background: '#fff', cursor: 'pointer' }}>
-            <LogOut size={18} />
+          <button onClick={logout} style={{ padding: '10px', borderRadius: '10px', color: '#EF4444', border: '1px solid #FEE2E2', background: '#fff', cursor: 'pointer' }}>
+            <LogOut size={20} />
           </button>
         </div>
       </header>
@@ -105,31 +105,31 @@ const Dashboard = () => {
           ⚠️ API Error: {error}
         </div>
       )}
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '48px' }}>
-        <StatCard title="Total Inventory" value={stats?.total_fields || 0} icon={<MapIcon size={20} />} color="#3B82F6" />
-        <StatCard title="Active Growth" value={stats?.status_breakdown.Active || 0} icon={<TrendingUp size={20} />} color="var(--status-active)" />
-        <StatCard title="Critical Attention" value={stats?.status_breakdown['At Risk'] || 0} icon={<AlertTriangle size={20} />} color="var(--status-risk)" />
-        <StatCard title="Yield Ready" value={stats?.status_breakdown.Completed || 0} icon={<CheckCircle2 size={20} />} color="var(--status-completed)" />
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px', marginBottom: '64px' }}>
+        <StatCard title="Total Inventory" value={stats?.total_fields || 0} icon={<MapIcon size={22} />} color="#3B82F6" />
+        <StatCard title="Active Growth" value={stats?.status_breakdown.Active || 0} icon={<TrendingUp size={22} />} color="var(--status-active)" />
+        <StatCard title="Critical Attention" value={stats?.status_breakdown['At Risk'] || 0} icon={<AlertTriangle size={22} />} color="var(--status-risk)" />
+        <StatCard title="Yield Ready" value={stats?.status_breakdown.Completed || 0} icon={<CheckCircle2 size={22} />} color="var(--status-completed)" />
       </section>
 
       {/* List Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h2 style={{ fontSize: '1.2rem', fontWeight: '700' }}>Shamba Registry</h2>
-        <div style={{ display: 'flex', gap: '12px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+        <h2 style={{ fontSize: '1.4rem', fontWeight: '800' }}>Shamba Registry</h2>
+        <div style={{ display: 'flex', gap: '16px' }}>
           <div style={{ position: 'relative' }}>
-            <Search style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={16} />
+            <Search style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={18} />
             <input 
               type="text" 
               placeholder="Filter by crop..." 
               className="glass-input" 
-              style={{ paddingLeft: '36px', width: '240px' }}
+              style={{ paddingLeft: '44px', width: '280px' }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           {isAdmin && (
-            <button onClick={() => setIsModalOpen(true)} className="btn-primary">
-              <Plus size={16} />
+            <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: '0 24px' }}>
+              <Plus size={18} />
               Register Shamba
             </button>
           )}
@@ -137,7 +137,7 @@ const Dashboard = () => {
       </div>
 
       {/* Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '32px' }}>
         {filteredFields.length > 0 ? (
           filteredFields.map((field, index) => (
             <FieldCard key={field.id} field={field} index={index} />
@@ -155,13 +155,13 @@ const Dashboard = () => {
 };
 
 const StatCard = ({ title, value, icon, color }) => (
-  <div className="glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', borderLeft: `4px solid ${color}` }}>
-    <div style={{ padding: '10px', borderRadius: '8px', background: `${color}10`, color: color }}>
+  <div className="glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '28px', borderLeft: `5px solid ${color}` }}>
+    <div style={{ padding: '12px', borderRadius: '10px', background: `${color}10`, color: color }}>
       {icon}
     </div>
     <div>
-      <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase' }}>{title}</p>
-      <h3 style={{ fontSize: '1.6rem', fontWeight: '800' }}>{value}</h3>
+      <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{title}</p>
+      <h3 style={{ fontSize: '1.8rem', fontWeight: '800' }}>{value}</h3>
     </div>
   </div>
 );
@@ -175,7 +175,7 @@ const FieldCard = ({ field, index }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
       className="glass-panel glass-card"
-      style={{ padding: '20px' }}
+      style={{ padding: '28px' }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
         <div>
