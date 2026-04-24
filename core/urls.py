@@ -6,27 +6,24 @@ from django.contrib.auth import get_user_model
 
 def health_check(request):
     try:
-        # Force migration if tables are missing
-        logger_info = []
-        try:
-            User = get_user_model()
-            User.objects.count()
-            logger_info.append("Database tables exist.")
-        except Exception:
-            logger_info.append("Tables missing. Running migrations...")
-            call_command('migrate', interactive=False)
-            call_command('seed_data')
-            logger_info.append("Migrations and seeding complete.")
-
         User = get_user_model()
         user_count = User.objects.count()
         
+        logger_info = []
+        if user_count == 0:
+            logger_info.append("Database empty. Seeding demo data...")
+            call_command('seed_data')
+            user_count = User.objects.count()
+            logger_info.append(f"Seeding complete. New user count: {user_count}")
+        else:
+            logger_info.append(f"Database contains {user_count} users.")
+
         return JsonResponse({
             "status": "ok",
             "database": "connected",
             "user_count": user_count,
             "logs": logger_info,
-            "message": "SmartSeason is ready!"
+            "message": "SmartSeason is ready with data!"
         })
     except Exception as e:
         return JsonResponse({
