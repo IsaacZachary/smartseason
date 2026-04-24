@@ -32,8 +32,8 @@ class Command(BaseCommand):
             defaults={
                 'username': 'agent1',
                 'role': User.AGENT,
-                'first_name': 'John',
-                'last_name': 'Doe'
+                'first_name': 'Kamau',
+                'last_name': 'Otieno'
             }
         )
         if created:
@@ -46,8 +46,8 @@ class Command(BaseCommand):
             defaults={
                 'username': 'agent2',
                 'role': User.AGENT,
-                'first_name': 'Jane',
-                'last_name': 'Smith'
+                'first_name': 'Faith',
+                'last_name': 'Moraa'
             }
         )
         if created:
@@ -57,12 +57,12 @@ class Command(BaseCommand):
 
         # Create Fields
         fields_data = [
-            {'name': 'North Valley', 'crop': 'Wheat', 'stage': Field.GROWING, 'agent': agent1, 'days_ago': 20},
-            {'name': 'East Ridge', 'crop': 'Maize', 'stage': Field.READY, 'agent': agent1, 'days_ago': 45},
-            {'name': 'South Creek', 'crop': 'Soybeans', 'stage': Field.HARVESTED, 'agent': agent2, 'days_ago': 60},
-            {'name': 'West Plateau', 'crop': 'Cotton', 'stage': Field.PLANTED, 'agent': agent2, 'days_ago': 5},
-            {'name': 'Forgotten Plot', 'crop': 'Barley', 'stage': Field.PLANTED, 'agent': agent1, 'days_ago': 40}, # At Risk (Delayed)
-            {'name': 'Neglected Acre', 'crop': 'Sunflowers', 'stage': Field.GROWING, 'agent': agent2, 'days_ago': 10}, # At Risk (Inactivity)
+            {'name': 'Nakuru North Shamba', 'crop': 'Maize', 'stage': Field.GROWING, 'agent': agent1, 'days_ago': 20},
+            {'name': 'Eldoret East Block', 'crop': 'Wheat', 'stage': Field.READY, 'agent': agent1, 'days_ago': 45},
+            {'name': 'Kiambu Coffee Estate', 'crop': 'Coffee', 'stage': Field.HARVESTED, 'agent': agent2, 'days_ago': 60},
+            {'name': 'Kericho Highlands', 'crop': 'Tea', 'stage': Field.PLANTED, 'agent': agent2, 'days_ago': 5},
+            {'name': 'Molo Potato Plot', 'crop': 'Potatoes', 'stage': Field.PLANTED, 'agent': agent1, 'days_ago': 40}, # At Risk (Delayed)
+            {'name': 'Nyeri Macadamia', 'crop': 'Macadamia', 'stage': Field.GROWING, 'agent': agent2, 'days_ago': 10}, # At Risk (Inactivity)
         ]
 
         for fd in fields_data:
@@ -85,8 +85,8 @@ class Command(BaseCommand):
                     notes=f"Initial record for {field.name}."
                 )
                 
-                # For the "Neglected Acre", we make the update very old to trigger "At Risk"
-                if fd['name'] == 'Neglected Acre':
+                # For the "Nyeri Macadamia", we make the update very old to trigger "At Risk"
+                if fd['name'] == 'Nyeri Macadamia':
                     update = field.updates.first()
                     update.created_at = timezone.now() - timedelta(days=20)
                     update.save()

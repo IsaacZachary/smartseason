@@ -86,15 +86,15 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
             <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--primary-glow)', color: 'var(--primary)' }}>
               <Sprout size={20} />
             </div>
-            New Field Registry
+            Sajili Shamba Jipya
           </h2>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Field Name</label>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Shamba Name / Location</label>
               <input 
                 className="glass-input" 
-                placeholder="e.g. North Plateau Section B"
+                placeholder="e.g. Nakuru Section A"
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
                 required
@@ -103,10 +103,10 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Crop Type</label>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Crop (Mimea)</label>
                 <input 
                   className="glass-input" 
-                  placeholder="e.g. Winter Wheat"
+                  placeholder="e.g. Maize / Coffee"
                   value={formData.crop_type}
                   onChange={e => setFormData({...formData, crop_type: e.target.value})}
                   required
@@ -125,14 +125,14 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
             </div>
 
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Assign Field Agent</label>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Assign Msimamizi (Agent)</label>
               <select 
                 className="glass-input"
                 value={formData.assigned_agent}
                 onChange={e => setFormData({...formData, assigned_agent: e.target.value})}
                 required
               >
-                <option value="">Select an agent...</option>
+                <option value="">Select msimamizi...</option>
                 {agents.map(agent => (
                   <option key={agent.id} value={agent.id}>{agent.first_name} {agent.last_name}</option>
                 ))}
@@ -145,10 +145,10 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
               style={{ width: '100%', justifyContent: 'center', marginTop: '12px' }}
               disabled={loading}
             >
-              {loading ? 'Registering...' : (
+              {loading ? 'Sajili...' : (
                 <>
                   <Save size={18} />
-                  Register Field
+                  Hifadhi Shamba
                 </>
               )}
             </button>
