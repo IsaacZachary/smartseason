@@ -159,41 +159,45 @@ const FieldDetail = () => {
               <motion.div 
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="glass-panel glass-card" 
-                style={{ marginBottom: '24px', border: '1px solid var(--primary-glow)' }}
+                className="glass-panel" 
+                style={{ marginBottom: '24px', border: '2px solid var(--primary-glow)', padding: '32px' }}
               >
-                <form onSubmit={handleAddUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
-                    <div>
-                      <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Field Stage</label>
-                      <select 
-                        className="glass-input" 
-                        value={newStage}
-                        onChange={(e) => setNewStage(e.target.value)}
-                        style={{ background: 'rgba(255,255,255,0.05)' }}
-                      >
-                        <option value="planted">Planted</option>
-                        <option value="growing">Growing</option>
-                        <option value="ready">Ready</option>
-                        <option value="harvested">Harvested</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Notes & Observations</label>
-                      <textarea 
-                        className="glass-input" 
-                        rows="4" 
-                        placeholder="Describe current observations (e.g., rainfall, pest activity, growth milestones, or soil moisture levels)..."
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                        required
-                      ></textarea>
-                    </div>
+                <form onSubmit={handleAddUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '10px', fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Field Stage</label>
+                    <select 
+                      className="glass-input" 
+                      value={newStage}
+                      onChange={(e) => setNewStage(e.target.value)}
+                      style={{ width: '100%', height: '48px' }}
+                    >
+                      <option value="planted">Planted</option>
+                      <option value="growing">Growing</option>
+                      <option value="ready">Ready</option>
+                      <option value="harvested">Harvested</option>
+                    </select>
                   </div>
-                  <button type="submit" className="btn-primary" disabled={submitting}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '10px', fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Notes & Observations</label>
+                    <textarea 
+                      className="glass-input" 
+                      rows="5"
+                      style={{ width: '100%', resize: 'vertical', lineHeight: '1.6' }}
+                      placeholder="Describe current observations (e.g., rainfall, pest activity, growth milestones, soil moisture levels)..."
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      required
+                    ></textarea>
+                  </div>
+                  <button 
+                    type="submit" 
+                    className="btn-primary" 
+                    style={{ width: '100%', justifyContent: 'center', height: '52px', fontSize: '1rem' }}
+                    disabled={submitting}
+                  >
                     {submitting ? 'Saving...' : (
                       <>
-                        <Save size={18} />
+                        <Save size={20} />
                         Submit Update
                       </>
                     )}
