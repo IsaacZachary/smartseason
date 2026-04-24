@@ -72,20 +72,20 @@ const Dashboard = () => {
   );
 
   return (
-    <div style={{ padding: '32px', maxWidth: '1400px', margin: '0 auto' }}>
+    <div style={{ padding: '40px', maxWidth: '1600px', margin: '0 auto' }}>
       {/* Header */}
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <img src={logo} alt="SmartSeason Logo" style={{ width: '56px', height: '56px', borderRadius: '12px', border: '1px solid var(--border-glass)' }} />
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '64px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+          <div style={{ padding: '4px', borderRadius: '18px', background: 'var(--primary-glow)', border: '1px solid var(--border-glass)' }}>
+            <img src={logo} alt="SmartSeason Logo" style={{ width: '64px', height: '64px', borderRadius: '14px' }} />
+          </div>
           <div>
-            <h1 style={{ fontSize: '2.4rem', fontWeight: '800', marginBottom: '4px', letterSpacing: '-0.03em' }}>
-              Dashboard
+            <h1 style={{ fontSize: '2.8rem', fontWeight: '900', marginBottom: '4px', letterSpacing: '-0.04em', color: 'var(--text-main)' }}>
+              System Dashboard
             </h1>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ padding: '4px 10px', borderRadius: '6px', background: 'var(--primary-glow)', color: 'var(--primary)', fontSize: '0.75rem', fontWeight: '600' }}>
-                {isAdmin ? 'ADMINISTRATOR' : 'FIELD AGENT'}
-              </span>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{user.first_name} {user.last_name} • {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+              <span className="badge badge-active" style={{ fontSize: '0.65rem' }}>{isAdmin ? 'ADMINISTRATOR' : 'FIELD AGENT'}</span>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: '500' }}>{user.first_name} {user.last_name} • {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
             </div>
           </div>
         </div>
@@ -188,16 +188,17 @@ const Dashboard = () => {
 
 const StatCard = ({ title, value, icon, color }) => (
   <motion.div 
-    whileHover={{ y: -4 }}
-    className="glass-panel" 
-    style={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '24px', borderLeft: `4px solid ${color}` }}
+    whileHover={{ y: -8, scale: 1.02 }}
+    className="glass-panel glass-card" 
+    style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '32px', position: 'relative', overflow: 'hidden' }}
   >
-    <div style={{ padding: '12px', borderRadius: '12px', background: `${color}10`, color: color }}>
+    <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: `${color}10`, borderRadius: '50%', filter: 'blur(40px)' }}></div>
+    <div style={{ width: '48px', height: '48px', borderRadius: '16px', background: `${color}15`, color: color, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       {icon}
     </div>
     <div>
-      <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>{title}</p>
-      <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--text-main)' }}>{value}</h3>
+      <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>{title}</p>
+      <h3 style={{ fontSize: '2.4rem', fontWeight: '900', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>{value}</h3>
     </div>
   </motion.div>
 );
