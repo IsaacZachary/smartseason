@@ -31,6 +31,7 @@ const Dashboard = () => {
   const [fields, setFields] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -48,8 +49,10 @@ const Dashboard = () => {
       ]);
       setFields(fieldsRes.data);
       setStats(statsRes.data);
+      setError(null);
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
+      setError(err.response?.data?.detail || err.message);
     } finally {
       setLoading(false);
     }
@@ -97,6 +100,11 @@ const Dashboard = () => {
       </header>
 
       {/* Stats Overview */}
+      {error && (
+        <div style={{ padding: '16px', background: '#FEF2F2', border: '1px solid #FCA5A5', color: '#B91C1C', borderRadius: '12px', marginBottom: '32px', fontSize: '0.9rem', fontWeight: '500' }}>
+          ⚠️ API Error: {error}
+        </div>
+      )}
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '48px' }}>
         <StatCard title="Total Inventory" value={stats?.total_fields || 0} icon={<MapIcon size={20} />} color="#3B82F6" />
         <StatCard title="Active Growth" value={stats?.status_breakdown.Active || 0} icon={<TrendingUp size={20} />} color="var(--status-active)" />
