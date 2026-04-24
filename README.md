@@ -1,49 +1,70 @@
-# SmartSeason Backend (API)
+# 🌽 SmartSeason: Shamba Monitoring System
 
-This is the Django-based REST API for the SmartSeason Field Monitoring System.
+SmartSeason is a professional agricultural telemetry platform designed to monitor crop lifecycles, track field agent activity, and provide proactive risk alerts for large-scale farming operations in Kenya.
 
-## 🛠️ Requirements
-- Python 3.9+
-- pip
+## 🚀 Live Deployment
+**URL**: [https://smartseason-rouge.vercel.app](https://smartseason-rouge.vercel.app)
 
-## ⚙️ Setup
-1. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   ```
-2. Activate it:
-   - Windows: `venv\Scripts\activate`
-   - Linux/Mac: `source venv/bin/activate`
-3. Install dependencies:
+### 🔑 Demo Credentials
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Administrator** | `admin@smartseason.com` | `Admin@123` |
+| **Field Agent** | `agent1@smartseason.com` | `Agent@123` |
+
+---
+
+## 🏗️ Project Architecture
+The project utilizes a **Flattened Monorepo** structure optimized for Vercel Serverless Functions.
+
+### 📂 Directory Structure
+- `/core/`: Central Django configuration (Settings, URL routing).
+- `/users/`: User management, custom authentication, and role logic.
+- `/fields/`: Shamba management, telemetry recording, and risk assessment logic.
+- `/frontend/`: React + Vite SPA with a premium glassmorphism design system.
+- `index.py`: The root WSGI entry point for Vercel Python runtime.
+- `vercel.json`: Deployment orchestration and routing rules.
+
+---
+
+## 🧠 Smart Features & Logic
+
+### 🟢🟡⚫ Status Mapping
+The system proactively assesses the health of every Shamba plot:
+- 🟢 **Active**: Growth is on schedule and reports are regular.
+- 🟡 **At Risk**: Triggered if **no update** is received for 14 days OR if a crop stays in the "Planted" stage for >30 days.
+- ⚫ **Completed**: Lifecycle finished (Harvested).
+
+### 🛠️ Tech Stack
+- **Backend**: Django 4.2 + Django REST Framework.
+- **Frontend**: React + Framer Motion (Animations) + Lucide Icons.
+- **Database**: Managed PostgreSQL (Neon).
+- **Security**: JWT-based Authentication with role-specific query filtering.
+
+---
+
+## 🛠️ Local Setup
+1. **Backend**:
    ```bash
    pip install -r requirements.txt
-   ```
-4. Run migrations:
-   ```bash
    python manage.py migrate
-   ```
-5. Seed demo data:
-   ```bash
    python manage.py seed_data
-   ```
-6. Run server:
-   ```bash
    python manage.py runserver
    ```
+2. **Frontend**:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
-## 📡 API Endpoints
+---
 
-### Authentication
-- `POST /api/auth/login/`: Get JWT tokens.
-- `GET /api/auth/me/`: Current user profile.
+---
 
-### Fields
-- `GET /api/fields/`: List fields (Role-aware).
-- `POST /api/fields/`: Create field (Admin only).
-- `GET /api/fields/stats/`: Dashboard statistics.
-- `POST /api/fields/<id>/add_update/`: Log a new observation.
+## 👨‍💻 Submission Details
+- **Developer**: Isaac Zachary
+- **Project**: SmartSeason Agricultural Telemetry Platform
+- **Date**: April 2026
 
-## 🗄️ Models
-- **User**: Custom user with `role` (Admin/Agent).
-- **Field**: Core field data and `@property status` logic.
-- **FieldUpdate**: History of observations and stage changes.
+## ⚖️ License
+This project was developed as a technical assessment for SmartSeason.
