@@ -1,73 +1,112 @@
-# 🌽 SmartSeason: Shamba Monitoring System
+# SmartSeason: Shamba Field Monitoring System
 
-SmartSeason is a professional agricultural telemetry platform designed to monitor crop lifecycles, track field agent activity, and provide proactive risk alerts for large-scale farming operations in Kenya.
+SmartSeason is a full-stack agricultural telemetry platform built to monitor crop lifecycles, track field agent activity, and surface proactive risk alerts for farming operations across Kenya.
 
-## 🚀 Live Deployment
-**URL**: [https://smartseason-rouge.vercel.app](https://smartseason-rouge.vercel.app)
+---
 
-### 🔑 Demo Credentials
+## Live Deployment
+
+URL: [https://smartseason-rouge.vercel.app](https://smartseason-rouge.vercel.app)
+
+### Demo Credentials
+
 | Role | Email | Password |
 | :--- | :--- | :--- |
-| **Administrator** | `admin@smartseason.com` | `Admin@123` |
-| **Field Agent** | `agent1@smartseason.com` | `Agent@123` |
+| Administrator | admin@smartseason.com | admin123 |
+| Field Agent | agent1@smartseason.com | agent123 |
 
 ---
 
-## 🏗️ Project Architecture
-The project utilizes a **Flattened Monorepo** structure optimized for Vercel Serverless Functions.
+## Project Structure
 
-### 📂 Directory Structure
-- `/core/`: Central Django configuration (Settings, URL routing).
-- `/users/`: User management, custom authentication, and role logic.
-- `/fields/`: Shamba management, telemetry recording, and risk assessment logic.
-- `/frontend/`: React + Vite SPA with a premium glassmorphism design system.
-- `index.py`: The root WSGI entry point for Vercel Python runtime.
-- `vercel.json`: Deployment orchestration and routing rules.
+The project uses a flattened monorepo. The Django backend lives at the repository root alongside the React frontend. There is no separate `/backend` directory.
 
----
-
-## 🧠 Smart Features & Logic
-
-### 🟢🟡⚫ Status Mapping
-The system proactively assesses the health of every Shamba plot:
-- 🟢 **Active**: Growth is on schedule and reports are regular.
-- 🟡 **At Risk**: Triggered if **no update** is received for 14 days OR if a crop stays in the "Planted" stage for >30 days.
-- ⚫ **Completed**: Lifecycle finished (Harvested).
-
-### 🛠️ Tech Stack
-- **Backend**: Django 4.2 + Django REST Framework.
-- **Frontend**: React + Framer Motion (Animations) + Lucide Icons.
-- **Database**: Managed PostgreSQL (Neon).
-- **Security**: JWT-based Authentication with role-specific query filtering.
-
----
-
-## 🛠️ Local Setup
-1. **Backend**:
-   ```bash
-   pip install -r requirements.txt
-   python manage.py migrate
-   python manage.py seed_data
-   python manage.py runserver
-   ```
-2. **Frontend**:
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
+```
+smartseason/
+|
+|-- core/               # Django settings, root URL configuration
+|-- fields/             # Field model, telemetry endpoints, status logic
+|-- users/              # Custom user model, JWT auth, role management
+|-- api/                # Shared API utilities
+|-- frontend/           # React + Vite SPA
+|   |-- src/
+|   |   |-- api/        # Axios API client
+|   |   |-- components/ # Shared UI components (modals, cards)
+|   |   |-- context/    # Auth context and state
+|   |   |-- hooks/      # Custom React hooks
+|   |   |-- pages/      # Dashboard, FieldDetail views
+|   |   |-- assets/     # Static assets (logo)
+|   |   |-- index.css   # Global design system (CSS variables)
+|   |   |-- App.jsx     # Router and layout
+|   |   `-- main.jsx    # Entry point
+|
+|-- manage.py           # Django management entry point
+|-- index.py            # Vercel WSGI entry point
+|-- wsgi.py             # WSGI config
+|-- requirements.txt    # Python dependencies
+|-- runtime.txt         # Python version for Vercel
+|-- build.sh            # Frontend build script for deployment
+`-- vercel.json         # Deployment routing rules
+```
 
 ---
 
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Django 4.2 + Django REST Framework |
+| Auth | JWT (SimpleJWT) with role-based query filtering |
+| Database | PostgreSQL via Neon (managed, serverless) |
+| Frontend | React 18 + Vite + Framer Motion + Lucide Icons |
+| Deployment | Vercel (monorepo, serverless Python runtime) |
+
 ---
 
-## 👨‍💻 Submission Details
-- **Developer**: Isaac Zachary
-- **Email**: [isaaczachary18@gmail.com](mailto:isaaczachary18@gmail.com)
-- **Portfolio**: [izach.netlify.app](https://izach.netlify.app)
+## Status Logic
+
+Field status is computed dynamically on every request, not stored.
+
+- **Active**: Growth is on schedule and field reports are regular.
+- **At Risk**: Triggered when no update is received for 14+ days, or when a crop remains in the Planted stage for more than 30 days.
+- **Completed**: Field has been harvested.
+
+---
+
+## Local Setup
+
+**Backend** (run from repository root):
+```bash
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+**Frontend**:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend dev server proxies API requests to `http://localhost:8000` in development and to `/_/backend/` in production.
+
+---
+
+## Design Decisions
+
+- The backend is flattened to the repository root so Vercel can resolve Django as a serverless Python function without additional configuration.
+- `vercel.json` maps `/_/backend/*` routes to the Django WSGI app and all other routes to the React SPA build, which allows both to coexist under one domain.
+- Field status is a computed model property rather than a database field. This prevents stale data and ensures risk signals are always accurate at query time.
+- Agents are filtered at the queryset level, not the view level, so the restriction applies consistently across all endpoints.
+
+---
+
+## Submission Details
+
+- **Developer**: Isaac Siko Zachary
+- **Email**: isaaczachary18@gmail.com
+- **Portfolio**: izach.netlify.app
 - **Phone**: +254 759 325 915
-- **Project**: SmartSeason Agricultural Telemetry Platform
-- **Date**: April 2026
-
-## ⚖️ License
-This project was developed as a technical assessment for SmartSeason.
+- **Assessment**: SmartSeason Field Monitoring System, Shamba Records
+- **Submitted**: April 2026
