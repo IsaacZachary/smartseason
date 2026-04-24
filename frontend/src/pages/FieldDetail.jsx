@@ -118,16 +118,16 @@ const FieldDetail = () => {
       <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '32px' }}>
         {/* Left Column: Details & Updates */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          <section className="glass-panel glass-card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
+          <section className="glass-panel" style={{ padding: '32px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '28px' }}>
               <div>
-                <h1 style={{ fontSize: '2rem', marginBottom: '4px' }}>{field.name}</h1>
+                <h1 style={{ fontSize: '2rem', marginBottom: '6px' }}>{field.name}</h1>
                 <p style={{ color: 'var(--text-muted)' }}>{field.crop_type} Monitoring</p>
               </div>
               <span className={`badge ${statusClass}`} style={{ fontSize: '0.9rem', padding: '6px 16px' }}>{field.status}</span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               <InfoItem icon={<Calendar size={18} />} label="Planting Date" value={new Date(field.planting_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} />
               <InfoItem icon={<Activity size={18} />} label="Current Stage" value={field.current_stage} highlight />
               <InfoItem icon={<UserIcon size={18} />} label="Field Agent" value={field.assigned_agent_details?.first_name ? `${field.assigned_agent_details.first_name} ${field.assigned_agent_details.last_name}` : 'Unassigned'} />
@@ -255,11 +255,11 @@ const FieldDetail = () => {
 };
 
 const InfoItem = ({ icon, label, value, highlight }) => (
-  <div style={{ padding: '16px', borderRadius: '12px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-glass)', display: 'flex', gap: '16px', alignItems: 'center' }}>
-    <div style={{ color: highlight ? 'var(--primary)' : 'var(--text-muted)', background: highlight ? 'var(--primary-glow)' : 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '10px' }}>{icon}</div>
+  <div style={{ padding: '24px', borderRadius: '12px', background: '#F8FAFC', border: '1px solid var(--border-glass)', display: 'flex', gap: '18px', alignItems: 'center' }}>
+    <div style={{ color: highlight ? 'var(--primary)' : 'var(--text-muted)', background: highlight ? 'var(--primary-glow)' : '#fff', padding: '12px', borderRadius: '10px', border: '1px solid var(--border-glass)', flexShrink: 0 }}>{icon}</div>
     <div>
-      <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '2px' }}>{label}</p>
-      <p style={{ fontSize: '1rem', fontWeight: highlight ? '700' : '500', color: highlight ? 'var(--primary)' : 'inherit', textTransform: highlight ? 'capitalize' : 'none' }}>{value}</p>
+      <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>{label}</p>
+      <p style={{ fontSize: '1.05rem', fontWeight: highlight ? '700' : '600', color: highlight ? 'var(--primary)' : 'var(--text-main)', textTransform: highlight ? 'capitalize' : 'none' }}>{value}</p>
     </div>
   </div>
 );
