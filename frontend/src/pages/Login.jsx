@@ -34,15 +34,16 @@ const Login = () => {
       justifyContent: 'center', 
       minHeight: '100vh',
       padding: '20px',
-      background: `linear-gradient(rgba(10, 22, 40, 0.8), rgba(10, 22, 40, 0.8)), url(${heroImage})`,
+      background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${heroImage})`,
       backgroundSize: 'cover',
-      backgroundPosition: 'center'
+      backgroundPosition: 'center',
+      backgroundColor: 'var(--bg-dark)'
     }}>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="glass-panel glass-card" 
-        style={{ width: '100%', maxWidth: '400px' }}
+        style={{ width: '100%', maxWidth: '400px', padding: '40px' }}
       >
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <div style={{ 
@@ -55,7 +56,7 @@ const Login = () => {
           }}>
             <Sprout size={32} />
           </div>
-          <h1 style={{ fontSize: '1.8rem', marginBottom: '8px' }}>SmartSeason</h1>
+          <h1 style={{ fontSize: '1.8rem', marginBottom: '8px', background: 'linear-gradient(to right, var(--primary), var(--text-main))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: '700' }}>SmartSeason</h1>
           <p style={{ color: 'var(--text-muted)' }}>Field Monitoring System</p>
         </div>
 
@@ -116,7 +117,7 @@ const Login = () => {
           </button>
         </form>
 
-        <div style={{ marginTop: '32px', padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px', border: '1px dashed var(--border-glass)' }}>
+        <div style={{ marginTop: '32px', padding: '16px', background: 'var(--bg-card)', borderRadius: '10px', border: '1px dashed var(--border-glass)' }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center' }}>
             Demo: admin@smartseason.com / Admin@123
           </p>

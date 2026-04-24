@@ -8,7 +8,7 @@ class FieldUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = FieldUpdate
         fields = ('id', 'field', 'agent', 'agent_name', 'stage', 'notes', 'created_at')
-        read_only_fields = ('id', 'agent', 'created_at')
+        read_only_fields = ('id', 'field', 'agent', 'created_at')
 
 class FieldSerializer(serializers.ModelSerializer):
     status = serializers.ReadOnlyField()

@@ -239,10 +239,8 @@ const FieldCard = ({ field, index }) => {
           style={{ 
             width: '100%', 
             justifyContent: 'center', 
-            background: 'var(--bg-card-hover)', 
-            color: 'white', 
-            border: '1px solid var(--border-glass)',
-            fontSize: '0.9rem'
+            fontSize: '0.9rem',
+            boxShadow: 'none'
           }}
         >
           View Telemetry
