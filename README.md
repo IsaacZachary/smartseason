@@ -9,7 +9,7 @@
 - **Dual-Role Interface**: Tailored dashboards for Administrators (Coordinators) and Field Agents.
 - **Automated Health Monitoring**: Computed "At Risk" status based on growth delays and update frequency.
 - **Real-time Lifecycle Tracking**: Monitor fields through *Planted*, *Growing*, *Ready*, and *Harvested* stages.
-- **Premium Design**: Modern Glassmorphism UI built with React and Framer Motion.
+- **Clean Interface**: A focused, user-friendly interface designed for clarity and efficiency in the field.
 - **Secure API**: Stateless JWT authentication with role-based permissions.
 
 ---
@@ -68,17 +68,35 @@ The app will be available at `http://localhost:5173`.
 ## 🧠 Design Decisions & Business Logic
 
 ### Computed Status Strategy
-Instead of manual status entry, SmartSeason uses an objective computation model:
+Instead of manual status entry, SmartSeason uses an objective computation model. This simulates real-world agricultural monitoring, where lack of updates or delayed growth signals potential issues requiring intervention.
 
 - **Completed**: Automatically assigned when `stage == "Harvested"`.
 - **At Risk**: 
-  - **Growth Delay**: If a field remains in "Planted" or "Growing" for >30 days.
-  - **Neglect**: If no observations have been logged for >14 days.
-- **Active**: Standard progression state.
+  - **Growth Delay**: If a field remains in "Planted" or "Growing" for >30 days. This flags potential crop failure or environmental issues.
+  - **Data Neglect**: If no observations have been logged for >14 days. This ensures field agents are maintaining active monitoring.
+- **Active**: Standard healthy progression state.
 
 ### Role Permissions
 - **Admins**: Full visibility of all fields, global statistics, and agent management.
 - **Agents**: Focused view showing only assigned fields to streamline field work.
+
+---
+
+## 🚀 Deployment Recommendations
+
+### Backend (Django)
+Recommended: **Render** or **Railway**
+1. Connect GitHub repo.
+2. Build Command: `pip install -r requirements.txt && python manage.py migrate`
+3. Start Command: `gunicorn core.wsgi`
+4. Set Environment Variables: `SECRET_KEY`, `DEBUG=False`, `ALLOWED_HOSTS`.
+
+### Frontend (React)
+Recommended: **Netlify** or **Vercel**
+1. Connect GitHub repo.
+2. Build Command: `npm run build`
+3. Publish Directory: `dist`
+4. Configure redirect for SPA: Create a `_redirects` file with `/* /index.html 200`.
 
 ---
 

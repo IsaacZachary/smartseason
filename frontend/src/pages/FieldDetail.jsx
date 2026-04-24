@@ -40,8 +40,11 @@ const FieldDetail = () => {
       setField(fieldRes.data);
       setNewStage(fieldRes.data.current_stage);
       
-      // Filter updates for this field (since my generic list might return all for admin)
-      const fieldUpdates = updatesRes.data.filter(u => u.field == id);
+      // Filter updates for this field and sort by newest first
+      const fieldUpdates = updatesRes.data
+        .filter(u => String(u.field) === String(id))
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      
       setUpdates(fieldUpdates);
     } catch (err) {
       console.error('Error fetching field details:', err);
@@ -59,9 +62,10 @@ const FieldDetail = () => {
     setSubmitting(true);
     try {
       await fieldAPI.addUpdate(id, { stage: newStage, notes });
+      alert('Observation successfully logged and telemetry synchronized.');
       setShowUpdateForm(false);
       setNotes('');
-      fetchData(); // Refresh data
+      await fetchData(); // Refresh data
     } catch (err) {
       console.error('Error adding update:', err);
       alert('Failed to add update.');

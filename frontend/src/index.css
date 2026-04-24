@@ -111,6 +111,18 @@ button {
 }
 
 /* Button Styles */
+.badge-at-risk {
+  background: var(--status-risk);
+  color: white;
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
 .btn-primary {
   background: var(--primary);
   color: white;

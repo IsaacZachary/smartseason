@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api/';
+const API_BASE_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:8000/api/' : '/_/backend/api/');
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -24,11 +24,11 @@ export const authAPI = {
 };
 
 export const fieldAPI = {
-  list: () => api.get('fields/'),
   retrieve: (id) => api.get(`fields/${id}/`),
   create: (data) => api.post('fields/', data),
   update: (id, data) => api.patch(`fields/${id}/`, data),
   addUpdate: (id, data) => api.post(`fields/${id}/add_update/`, data),
+  list: (type = 'fields', config = {}) => api.get(type === 'fields' ? 'fields/' : 'updates/', config),
   stats: () => api.get('fields/stats/'),
 };
 

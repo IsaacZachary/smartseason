@@ -68,3 +68,8 @@ class FieldUpdate(models.Model):
 
     def __str__(self):
         return f"Update for {self.field.name} at {self.created_at}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Touch parent field to update its updated_at timestamp
+        self.field.save()
