@@ -131,7 +131,7 @@ const FieldDetail = () => {
               <InfoItem icon={<Calendar size={18} />} label="Planting Date" value={new Date(field.planting_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} />
               <InfoItem icon={<Activity size={18} />} label="Current Stage" value={field.current_stage} highlight />
               <InfoItem icon={<UserIcon size={18} />} label="Field Agent" value={field.assigned_agent_details?.first_name ? `${field.assigned_agent_details.first_name} ${field.assigned_agent_details.last_name}` : 'Unassigned'} />
-              <InfoItem icon={<Clock size={18} />} label="Last Sync" value={new Date(field.updated_at).toLocaleDateString()} />
+              <InfoItem icon={<Clock size={18} />} label="Last Field Report" value={new Date(field.updated_at).toLocaleDateString()} />
             </div>
           </section>
 
@@ -183,7 +183,7 @@ const FieldDetail = () => {
                       <textarea 
                         className="glass-input" 
                         rows="4" 
-                        placeholder="What did you observe today? Any pests, weather issues, or growth milestones?"
+                        placeholder="Describe current observations (e.g., rainfall, pest activity, growth milestones, or soil moisture levels)..."
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
                         required

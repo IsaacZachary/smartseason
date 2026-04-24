@@ -110,11 +110,12 @@ const Dashboard = () => {
       </header>
 
       {/* Stats Overview */}
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '64px' }}>
-        <StatCard title="Total Inventory" value={stats?.total_fields || 0} icon={<MapIcon size={24} />} color="#3B82F6" trend="+12% from last month" />
-        <StatCard title="Active Growth" value={stats?.status_breakdown.Active || 0} icon={<TrendingUp size={24} />} color="var(--status-active)" trend="Normal progression" />
-        <StatCard title="Critical Attention" value={stats?.status_breakdown['At Risk'] || 0} icon={<AlertTriangle size={24} />} color="var(--status-risk)" trend="Action required" />
-        <StatCard title="Yield Ready" value={stats?.status_breakdown.Completed || 0} icon={<CheckCircle2 size={24} />} color="var(--status-completed)" trend="Harvest successful" />
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px', marginBottom: '64px' }}>
+        <StatCard title="Total Inventory" value={stats?.total_fields || 0} icon={<MapIcon size={24} />} color="#3B82F6" />
+        <StatCard title="Active Growth" value={stats?.status_breakdown.Active || 0} icon={<TrendingUp size={24} />} color="var(--status-active)" />
+        <StatCard title="Critical Attention" value={stats?.status_breakdown['At Risk'] || 0} icon={<AlertTriangle size={24} />} color="var(--status-risk)" />
+        <StatCard title="Stale Records" value={stats?.no_recent_updates || 0} icon={<Clock size={24} />} color="#94A3B8" />
+        <StatCard title="Yield Ready" value={stats?.status_breakdown.Completed || 0} icon={<CheckCircle2 size={24} />} color="var(--status-completed)" />
       </section>
 
       {/* Fields List Header */}

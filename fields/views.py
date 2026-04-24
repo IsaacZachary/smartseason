@@ -46,29 +46,27 @@ class FieldViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset()
         total_fields = queryset.count()
         
-        # We compute status in memory for now because it's a property
-        # For a real app, we'd store it or use more complex SQL
+        now = timezone.now()
         fields = list(queryset)
         status_counts = {
             'Active': 0,
             'At Risk': 0,
             'Completed': 0
         }
-        stage_counts = {
-            'planted': 0,
-            'growing': 0,
-            'ready': 0,
-            'harvested': 0
-        }
         
+        no_recent_updates = 0
         for f in fields:
             status_counts[f.status] += 1
-            stage_counts[f.current_stage] += 1
-            
+            # Logic for "No Recent Updates"
+            last_update = f.updates.order_by('-created_at').first()
+            last_activity = last_update.created_at if last_update else f.created_at
+            if (now - last_activity).days > 14:
+                no_recent_updates += 1
+                
         return Response({
             'total_fields': total_fields,
             'status_breakdown': status_counts,
-            'stage_breakdown': stage_counts
+            'no_recent_updates': no_recent_updates
         })
 
 class FieldUpdateViewSet(viewsets.ReadOnlyModelViewSet):
