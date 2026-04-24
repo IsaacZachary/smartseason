@@ -12,6 +12,28 @@
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+body.dark-theme {
+  --bg-page: #0F172A;
+  --bg-card: #1E293B;
+  --text-main: #F1F5F9;
+  --text-muted: #94A3B8;
+  --border-glass: #334155;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+}
+
+body.dark-theme .glass-panel {
+  background: var(--bg-card);
+  border-color: var(--border-glass);
+}
+
+body.dark-theme input,
+body.dark-theme select {
+  background: #1E293B;
+  color: var(--text-main);
+  border-color: var(--border-glass);
+}
+
 * {
   margin: 0;
   padding: 0;

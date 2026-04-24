@@ -88,12 +88,19 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 16px', borderRadius: '10px', background: '#fff', border: '1px solid var(--border-glass)' }}>
             <UserIcon size={18} color="var(--text-muted)" />
             <span style={{ fontSize: '0.85rem', fontWeight: '500' }}>{user.email}</span>
           </div>
-          <button onClick={logout} style={{ padding: '10px', borderRadius: '10px', color: '#EF4444', border: '1px solid #FEE2E2', background: '#fff', cursor: 'pointer' }}>
+          <button
+            onClick={toggleTheme}
+            style={{ padding: '10px', borderRadius: '10px', background: '#fff', border: '1px solid var(--border-glass)', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            title="Toggle Dark Mode"
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <button onClick={logout} style={{ padding: '10px', borderRadius: '10px', color: '#EF4444', border: '1px solid #FEE2E2', background: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <LogOut size={20} />
           </button>
         </div>
@@ -185,24 +192,24 @@ const FieldCard = ({ field, index }) => {
         <span className={`badge ${statusClass}`}>{field.status}</span>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', padding: '12px', background: '#F8FAFC', borderRadius: '8px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px', padding: '18px', background: '#F8FAFC', borderRadius: '12px', gap: '16px' }}>
         <div>
-          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '2px', fontWeight: '700' }}>CURRENT STAGE</p>
-          <p style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--primary)', textTransform: 'capitalize' }}>{field.current_stage}</p>
+          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '6px', fontWeight: '700', letterSpacing: '0.05em' }}>CURRENT STAGE</p>
+          <p style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--primary)', textTransform: 'capitalize' }}>{field.current_stage}</p>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '2px', fontWeight: '700' }}>PLANTING DATE</p>
-          <p style={{ fontSize: '0.85rem', fontWeight: '500' }}>{new Date(field.planting_date).toLocaleDateString()}</p>
+          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '6px', fontWeight: '700', letterSpacing: '0.05em' }}>PLANTING DATE</p>
+          <p style={{ fontSize: '0.95rem', fontWeight: '600' }}>{new Date(field.planting_date).toLocaleDateString()}</p>
         </div>
       </div>
 
       <Link 
         to={`/fields/${field.id}`} 
         className="btn-primary" 
-        style={{ width: '100%', justifyContent: 'center', fontSize: '0.85rem' }}
+        style={{ width: '100%', justifyContent: 'center', fontSize: '0.9rem', height: '48px' }}
       >
         View Telemetry
-        <ChevronRight size={16} />
+        <ChevronRight size={18} />
       </Link>
     </motion.div>
   );
