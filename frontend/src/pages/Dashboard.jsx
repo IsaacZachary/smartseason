@@ -81,11 +81,12 @@ const Dashboard = () => {
             <h1 style={{ fontSize: '2.4rem', fontWeight: '800', marginBottom: '4px', letterSpacing: '-0.03em' }}>
               Dashboard
             </h1>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ padding: '4px 10px', borderRadius: '6px', background: 'var(--primary-glow)', color: 'var(--primary)', fontSize: '0.75rem', fontWeight: '600' }}>
-              {isAdmin ? 'ADMINISTRATOR' : 'FIELD AGENT'}
-            </span>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{user.first_name} {user.last_name} • {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ padding: '4px 10px', borderRadius: '6px', background: 'var(--primary-glow)', color: 'var(--primary)', fontSize: '0.75rem', fontWeight: '600' }}>
+                {isAdmin ? 'ADMINISTRATOR' : 'FIELD AGENT'}
+              </span>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{user.first_name} {user.last_name} • {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+            </div>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
