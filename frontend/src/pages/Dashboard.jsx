@@ -15,7 +15,8 @@ import {
   User as UserIcon,
   ChevronRight,
   TrendingUp,
-  Activity
+  Activity,
+  Sprout
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
