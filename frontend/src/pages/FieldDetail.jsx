@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { fieldAPI } from '../api';
+import api, { fieldAPI } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { 
   ArrowLeft, 
@@ -32,16 +32,16 @@ const FieldDetail = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fieldAPI.retrieve(id);
-      setField(response.data);
-      setNewStage(response.data.current_stage);
+      const [fieldRes, updatesRes] = await Promise.all([
+        fieldAPI.retrieve(id),
+        fieldAPI.list('updates', { params: { field_id: id } })
+      ]);
+      setField(fieldRes.data);
+      setNewStage(fieldRes.data.current_stage);
       
-      // Fetch updates history
-      const updatesRes = await fieldAPI.list('updates', { params: { field_id: id } });
-      // Actually we'll just use the list endpoint with a filter if possible, 
-      // but my viewset was simpler. Let's adjust the retrieve or fetch separately.
-      // For now, let's assume we can get updates for this field.
-      // (Correcting API call based on my earlier FieldUpdateViewSet)
+      // Filter updates for this field (since my generic list might return all for admin)
+      const fieldUpdates = updatesRes.data.filter(u => u.field == id);
+      setUpdates(fieldUpdates);
     } catch (err) {
       console.error('Error fetching field details:', err);
     } finally {
@@ -69,17 +69,46 @@ const FieldDetail = () => {
     }
   };
 
-  if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading field details...</div>;
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to decommission this field? All telemetry data will be lost.')) {
+      try {
+        await fieldAPI.update(id, { active: false }); // Soft delete or actual delete
+        // For this demo, let's just use the delete endpoint
+        await api.delete(`fields/${id}/`);
+        navigate('/');
+      } catch (err) {
+        console.error('Error deleting field:', err);
+        alert('Failed to delete field.');
+      }
+    }
+  };
+
+  if (loading) return (
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', gap: '20px' }}>
+      <Activity className="animate-spin" size={40} color="var(--primary)" />
+      <p style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>RETRIEVING TELEMETRY...</p>
+    </div>
+  );
   if (!field) return <div style={{ padding: '40px', textAlign: 'center' }}>Field not found.</div>;
 
   const statusClass = `badge-${field.status.toLowerCase().replace(' ', '-')}`;
 
   return (
-    <div style={{ padding: '32px', maxWidth: '1000px', margin: '0 auto' }}>
-      <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', marginBottom: '32px', fontSize: '0.9rem' }}>
-        <ArrowLeft size={16} />
-        Back to Dashboard
-      </Link>
+    <div style={{ padding: '32px', maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+        <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontSize: '0.9rem', transition: 'var(--transition)' }} className="hover-white">
+          <ArrowLeft size={16} />
+          Back to Command Center
+        </Link>
+        {user.role === 'admin' && (
+          <button 
+            onClick={handleDelete}
+            style={{ color: '#F87171', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', borderRadius: '8px', background: 'rgba(248, 113, 113, 0.05)', border: '1px solid rgba(248, 113, 113, 0.1)' }}
+          >
+            Decommission Field
+          </button>
+        )}
+      </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '32px' }}>
         {/* Left Column: Details & Updates */}
@@ -169,14 +198,23 @@ const FieldDetail = () => {
             )}
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {field.last_update ? (
-                <UpdateItem update={field.last_update} />
+              {updates.length > 0 ? (
+                updates.map((update, index) => (
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    key={update.id}
+                  >
+                    <UpdateItem update={update} />
+                  </motion.div>
+                ))
               ) : (
-                <div style={{ padding: '32px', textAlign: 'center', background: 'var(--bg-card)', borderRadius: '16px', color: 'var(--text-muted)' }}>
-                  No updates recorded yet for this field.
+                <div style={{ padding: '48px', textAlign: 'center', background: 'var(--bg-card)', borderRadius: '24px', border: '1px dashed var(--border-glass)', color: 'var(--text-muted)' }}>
+                  <History size={32} style={{ opacity: 0.3, marginBottom: '16px' }} />
+                  <p>No historical telemetry recorded for this plot.</p>
                 </div>
               )}
-              {/* Note: In a real app we'd map all updates here */}
             </div>
           </section>
         </div>
@@ -207,31 +245,35 @@ const FieldDetail = () => {
 };
 
 const InfoItem = ({ icon, label, value, highlight }) => (
-  <div style={{ display: 'flex', gap: '12px' }}>
-    <div style={{ color: 'var(--text-muted)', paddingTop: '2px' }}>{icon}</div>
+  <div style={{ padding: '16px', borderRadius: '12px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-glass)', display: 'flex', gap: '16px', alignItems: 'center' }}>
+    <div style={{ color: highlight ? 'var(--primary)' : 'var(--text-muted)', background: highlight ? 'var(--primary-glow)' : 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '10px' }}>{icon}</div>
     <div>
-      <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '2px' }}>{label}</p>
-      <p style={{ fontSize: '1rem', fontWeight: highlight ? '600' : '400', color: highlight ? 'var(--primary)' : 'inherit', textTransform: highlight ? 'capitalize' : 'none' }}>{value}</p>
+      <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '2px' }}>{label}</p>
+      <p style={{ fontSize: '1rem', fontWeight: highlight ? '700' : '500', color: highlight ? 'var(--primary)' : 'inherit', textTransform: highlight ? 'capitalize' : 'none' }}>{value}</p>
     </div>
   </div>
 );
 
 const UpdateItem = ({ update }) => (
-  <div className="glass-panel" style={{ padding: '20px', display: 'flex', gap: '16px' }}>
-    <div style={{ padding: '10px', borderRadius: '50%', background: 'var(--bg-card)', height: 'fit-content' }}>
-      <MessageSquare size={18} color="var(--primary)" />
+  <div className="glass-panel" style={{ padding: '24px', display: 'flex', gap: '20px', position: 'relative' }}>
+    <div style={{ padding: '12px', borderRadius: '12px', background: 'var(--primary-glow)', height: 'fit-content', color: 'var(--primary)' }}>
+      <MessageSquare size={20} />
     </div>
     <div style={{ flex: 1 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-        <h4 style={{ fontSize: '0.95rem' }}>{update.agent_name || 'Agent'}</h4>
-        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{new Date(update.created_at).toLocaleString()}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+        <div>
+          <h4 style={{ fontSize: '1rem', fontWeight: '600' }}>{update.agent_name || 'System Registry'}</h4>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{new Date(update.created_at).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</span>
+        </div>
+        {update.stage && (
+          <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '6px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border-glass)', color: 'var(--primary)', fontWeight: '600', textTransform: 'uppercase' }}>
+            {update.stage}
+          </span>
+        )}
       </div>
-      <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '12px' }}>{update.notes}</p>
-      {update.stage && (
-        <span style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: '4px', background: 'var(--primary-glow)', color: 'var(--primary)', fontWeight: '500' }}>
-          Stage changed to: {update.stage}
-        </span>
-      )}
+      <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-glass)' }}>
+        <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', lineHeight: '1.6', fontStyle: 'italic' }}>"{update.notes}"</p>
+      </div>
     </div>
   </div>
 );
