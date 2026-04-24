@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Database detection logic
-db_url = os.getenv('DATABASE_URL') or os.getenv('POSTGRES_URL') or os.getenv('NEON_DATABASE_URL')
+db_url = os.getenv('DATABASE_URL') or os.getenv('POSTGRES_URL') or os.getenv('STORAGE_URL') or os.getenv('NEON_DATABASE_URL')
 
 if db_url:
     DATABASES = {
