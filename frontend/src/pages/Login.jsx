@@ -80,24 +80,26 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Email Address</label>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: '#fff', fontWeight: '500' }}>Email Address</label>
             <input 
               type="email" 
               className="glass-input" 
               placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              style={{ color: '#fff', background: 'rgba(255,255,255,0.05)' }}
               required
             />
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Password</label>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: '#fff', fontWeight: '500' }}>Password</label>
             <input 
               type="password" 
               className="glass-input" 
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              style={{ color: '#fff', background: 'rgba(255,255,255,0.05)' }}
               required
             />
           </div>
@@ -117,9 +119,16 @@ const Login = () => {
           </button>
         </form>
 
-        <div style={{ marginTop: '32px', padding: '16px', background: 'var(--bg-card)', borderRadius: '10px', border: '1px dashed var(--border-glass)' }}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center' }}>
-            Demo: admin@smartseason.com / Admin@123
+        <div style={{ 
+          marginTop: '32px', 
+          padding: '16px', 
+          background: 'rgba(255, 255, 255, 0.1)', 
+          borderRadius: '12px', 
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(4px)'
+        }}>
+          <p style={{ fontSize: '0.8rem', color: '#fff', textAlign: 'center', fontWeight: '500' }}>
+            🚀 Demo: admin@smartseason.com / Admin@123
           </p>
         </div>
       </motion.div>
