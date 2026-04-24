@@ -10,19 +10,40 @@ logger = logging.getLogger(__name__)
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
-application = get_wsgi_application()
+# Global flag to ensure migration runs only once
+_db_initialized = False
 
-# Auto-initialize database on Vercel
-try:
-    logger.debug("Checking database migrations...")
-    call_command('migrate', interactive=False)
-    # Check if we need to seed
-    from users.models import User
-    if not User.objects.filter(email='admin@smartseason.com').exists():
-        logger.debug("Seeding demo data...")
-        call_command('seed_data')
-except Exception as e:
-    logger.error(f"Database initialization status: {e}")
+def application(environ, start_response):
+    global _db_initialized
+    
+    if not _db_initialized:
+        try:
+            logger.debug("FIRST REQUEST: Initializing database...")
+            call_command('migrate', interactive=False)
+            
+            # Seed data if no admin exists
+            from django.contrib.auth import get_user_model
+            User = get_user_model()
+            if not User.objects.filter(email='admin@smartseason.com').exists():
+                logger.debug("Seeding demo data...")
+                call_command('seed_data')
+                
+            _db_initialized = True
+            logger.debug("Database initialization complete.")
+        except Exception as e:
+            logger.error(f"DATABASE INIT FAILED: {e}", exc_info=True)
+            # We don't set _db_initialized to True here so we can try again on next request
 
-# Alias for Vercel
+    try:
+        _application = get_wsgi_application()
+        return _application(environ, start_response)
+    except Exception as e:
+        logger.error(f"REQUEST FAILED: {e}", exc_info=True)
+        status = '500 Internal Server Error'
+        output = f"SERVER ERROR: {str(e)}".encode()
+        response_headers = [('Content-type', 'text/plain'),
+                            ('Content-Length', str(len(output)))]
+        start_response(status, response_headers)
+        return [output]
+
 app = application
