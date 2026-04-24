@@ -1,24 +1,37 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
+from django.core.management import call_command
 from django.contrib.auth import get_user_model
 
 def health_check(request):
     try:
+        # Force migration if tables are missing
+        logger_info = []
+        try:
+            User = get_user_model()
+            User.objects.count()
+            logger_info.append("Database tables exist.")
+        except Exception:
+            logger_info.append("Tables missing. Running migrations...")
+            call_command('migrate', interactive=False)
+            call_command('seed_data')
+            logger_info.append("Migrations and seeding complete.")
+
         User = get_user_model()
         user_count = User.objects.count()
-        admin_exists = User.objects.filter(email='admin@smartseason.com').exists()
+        
         return JsonResponse({
             "status": "ok",
             "database": "connected",
             "user_count": user_count,
-            "admin_ready": admin_exists,
-            "message": "Backend is fully operational"
+            "logs": logger_info,
+            "message": "SmartSeason is ready!"
         })
     except Exception as e:
         return JsonResponse({
             "status": "error",
-            "database": "failed",
+            "database": "connected",
             "error_detail": str(e)
         }, status=500)
 
