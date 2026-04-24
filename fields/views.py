@@ -43,31 +43,33 @@ class FieldViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def stats(self, request):
-        queryset = self.get_queryset()
-        total_fields = queryset.count()
-        
-        now = timezone.now()
-        fields = list(queryset)
-        status_counts = {
-            'Active': 0,
-            'At Risk': 0,
-            'Completed': 0
-        }
-        
-        no_recent_updates = 0
-        for f in fields:
-            status_counts[f.status] += 1
-            # Logic for "No Recent Updates"
-            last_update = f.updates.order_by('-created_at').first()
-            last_activity = last_update.created_at if last_update else f.created_at
-            if (now - last_activity).days > 14:
-                no_recent_updates += 1
+        try:
+            queryset = self.get_queryset()
+            total_fields = queryset.count()
+            
+            now = timezone.now()
+            fields = list(queryset)
+            status_counts = {'Active': 0, 'At Risk': 0, 'Completed': 0}
+            no_recent_updates = 0
+            
+            for f in fields:
+                # Use property for count
+                s = f.status
+                status_counts[s] = status_counts.get(s, 0) + 1
                 
-        return Response({
-            'total_fields': total_fields,
-            'status_breakdown': status_counts,
-            'no_recent_updates': no_recent_updates
-        })
+                # Manual check for stale updates
+                last_update = f.updates.order_by('-created_at').first()
+                last_activity = last_update.created_at if last_update else f.created_at
+                if (now - last_activity).days > 14:
+                    no_recent_updates += 1
+                    
+            return Response({
+                'total_fields': total_fields,
+                'status_breakdown': status_counts,
+                'no_recent_updates': no_recent_updates
+            })
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 class FieldUpdateViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FieldUpdateSerializer
