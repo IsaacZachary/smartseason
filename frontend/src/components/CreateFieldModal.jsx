@@ -82,19 +82,19 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
             <X size={24} />
           </button>
 
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <h2 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--primary-glow)', color: 'var(--primary)' }}>
-              <Sprout size={20} />
+              <Sprout size={18} />
             </div>
-            Register New Shamba
+            Register Shamba
           </h2>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Shamba Name / Location</label>
+              <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.75rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Shamba Name</label>
               <input 
                 className="glass-input" 
-                placeholder="e.g. Nakuru Section A"
+                placeholder="e.g. Molo Section A"
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
                 required
@@ -103,17 +103,17 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Crop Type</label>
+                <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.75rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Crop Type</label>
                 <input 
                   className="glass-input" 
-                  placeholder="e.g. Maize / Coffee"
+                  placeholder="e.g. Maize"
                   value={formData.crop_type}
                   onChange={e => setFormData({...formData, crop_type: e.target.value})}
                   required
                 />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Planting Date</label>
+                <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.75rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Planting Date</label>
                 <input 
                   type="date"
                   className="glass-input" 
@@ -125,7 +125,7 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
             </div>
 
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Assign Field Agent</label>
+              <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.75rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Field Agent</label>
               <select 
                 className="glass-input"
                 value={formData.assigned_agent}
@@ -145,7 +145,7 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
               style={{ width: '100%', justifyContent: 'center', marginTop: '12px' }}
               disabled={loading}
             >
-              {loading ? 'Registering...' : (
+              {loading ? 'Saving...' : (
                 <>
                   <Save size={18} />
                   Save Shamba

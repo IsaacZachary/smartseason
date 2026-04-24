@@ -179,11 +179,11 @@ const FieldCard = ({ field, index }) => {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', padding: '12px', background: '#F8FAFC', borderRadius: '8px' }}>
         <div>
-          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '2px' }}>STAGE</p>
+          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '2px', fontWeight: '700' }}>CURRENT STAGE</p>
           <p style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--primary)', textTransform: 'capitalize' }}>{field.current_stage}</p>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '2px' }}>PLANTED</p>
+          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '2px', fontWeight: '700' }}>PLANTING DATE</p>
           <p style={{ fontSize: '0.85rem', fontWeight: '500' }}>{new Date(field.planting_date).toLocaleDateString()}</p>
         </div>
       </div>
@@ -193,7 +193,7 @@ const FieldCard = ({ field, index }) => {
         className="btn-primary" 
         style={{ width: '100%', justifyContent: 'center', fontSize: '0.85rem' }}
       >
-        View Details
+        View Telemetry
         <ChevronRight size={16} />
       </Link>
     </motion.div>
