@@ -69,7 +69,8 @@ class FieldViewSet(viewsets.ModelViewSet):
                 'no_recent_updates': no_recent_updates
             })
         except Exception as e:
-            return Response({"error": str(e)}, status=500)
+            import traceback
+            return Response({"error": traceback.format_exc()}, status=500)
 
 class FieldUpdateViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FieldUpdateSerializer

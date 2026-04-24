@@ -52,7 +52,7 @@ const Dashboard = () => {
       setError(null);
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
-      setError(err.response?.data?.detail || err.message);
+      setError(err.response?.data?.error || err.response?.data?.detail || err.message);
     } finally {
       setLoading(false);
     }
