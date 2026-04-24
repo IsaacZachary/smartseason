@@ -31,11 +31,11 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
-    document.body.classList.toggle('light-theme');
+    document.body.classList.toggle('dark-theme');
   };
 
   const fetchData = async () => {

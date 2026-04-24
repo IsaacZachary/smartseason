@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-dark: #0A1628;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.06);
-  --border-glass: rgba(255, 255, 255, 0.1);
-  --text-main: #F8FAFC;
-  --text-muted: #94A3B8;
+  --bg-dark: #F8FAFC;
+  --bg-card: rgba(0, 0, 0, 0.03);
+  --bg-card-hover: rgba(0, 0, 0, 0.06);
+  --border-glass: rgba(0, 0, 0, 0.1);
+  --text-main: #0F172A;
+  --text-muted: #64748B;
   
   --primary: #10B981; /* Emerald 500 */
-  --primary-glow: rgba(16, 185, 129, 0.2);
+  --primary-glow: rgba(16, 185, 129, 0.1);
   --secondary: #F5A623; /* Amber */
   
   --status-active: #10B981;
@@ -22,14 +22,14 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.light-theme {
-  --bg-dark: #F8FAFC;
-  --bg-card: rgba(0, 0, 0, 0.03);
-  --bg-card-hover: rgba(0, 0, 0, 0.06);
-  --border-glass: rgba(0, 0, 0, 0.1);
-  --text-main: #0F172A;
-  --text-muted: #64748B;
-  --primary-glow: rgba(16, 185, 129, 0.1);
+.dark-theme {
+  --bg-dark: #0A1628;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --primary-glow: rgba(16, 185, 129, 0.2);
 }
 
 * {

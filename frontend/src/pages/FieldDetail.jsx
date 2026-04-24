@@ -12,7 +12,8 @@ import {
   Activity, 
   User as UserIcon,
   CheckCircle2,
-  Save
+  Save,
+  Clock
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
