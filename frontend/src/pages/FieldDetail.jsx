@@ -103,14 +103,14 @@ const FieldDetail = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontSize: '0.9rem', transition: 'var(--transition)' }} className="hover-white">
           <ArrowLeft size={16} />
-          Rudi Nyumbani
+          Back to Home
         </Link>
         {user.role === 'admin' && (
           <button 
             onClick={handleDelete}
             style={{ color: '#F87171', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', borderRadius: '8px', background: 'rgba(248, 113, 113, 0.05)', border: '1px solid rgba(248, 113, 113, 0.1)' }}
           >
-            Futa Shamba (Delete)
+            Delete Shamba Plot
           </button>
         )}
       </div>
@@ -128,9 +128,9 @@ const FieldDetail = () => {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-              <InfoItem icon={<Calendar size={18} />} label="Tarehe ya Kupanda" value={new Date(field.planting_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} />
-              <InfoItem icon={<Activity size={18} />} label="Hali ya Sasa (Stage)" value={field.current_stage} highlight />
-              <InfoItem icon={<UserIcon size={18} />} label="Msimamizi" value={field.assigned_agent_details?.first_name ? `${field.assigned_agent_details.first_name} ${field.assigned_agent_details.last_name}` : 'Unassigned'} />
+              <InfoItem icon={<Calendar size={18} />} label="Planting Date" value={new Date(field.planting_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} />
+              <InfoItem icon={<Activity size={18} />} label="Current Stage" value={field.current_stage} highlight />
+              <InfoItem icon={<UserIcon size={18} />} label="Field Agent" value={field.assigned_agent_details?.first_name ? `${field.assigned_agent_details.first_name} ${field.assigned_agent_details.last_name}` : 'Unassigned'} />
               <InfoItem icon={<Clock size={18} />} label="Last Sync" value={new Date(field.updated_at).toLocaleDateString()} />
             </div>
           </section>
@@ -139,7 +139,7 @@ const FieldDetail = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <h2 style={{ fontSize: '1.4rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <History size={22} color="var(--primary)" />
-                Historia ya Shamba
+                Shamba History
               </h2>
               <button 
                 onClick={() => setShowUpdateForm(!showUpdateForm)}
@@ -149,7 +149,7 @@ const FieldDetail = () => {
                 {showUpdateForm ? 'Cancel' : (
                   <>
                     <Plus size={16} />
-                    Rekodi Mpya (New Record)
+                    New Record
                   </>
                 )}
               </button>
@@ -229,21 +229,21 @@ const FieldDetail = () => {
           <section className="glass-panel glass-card">
             <h3 style={{ fontSize: '1.2rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Activity size={20} color="var(--primary)" />
-              Uchambuzi wa Haraka (Insights)
+              Quick Insights
             </h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ padding: '16px', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-glass)' }}>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Awamu ya Ukuzi (Phase)</p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Growth Phase</p>
                 <p style={{ fontWeight: '600' }}>
-                  {field.current_stage === 'harvested' ? 'Tayari kwa Soko (Market Ready)' : 'Ukuaji unaendelea (Growing)'}
+                  {field.current_stage === 'harvested' ? 'Market Ready (Tayari)' : 'Active Monitoring Required'}
                 </p>
               </div>
 
               <div style={{ padding: '16px', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-glass)' }}>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Tathmini ya Afya (Health)</p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Health Assessment</p>
                 <p style={{ fontWeight: '600', color: statusClass.includes('active') ? 'var(--status-active)' : 'var(--status-risk)' }}>
-                  {field.status === 'At Risk' ? '⚠️ Inahitaji Makini (Attention Required)' : '✅ Shamba Liko Salama (Healthy)'}
+                  {field.status === 'At Risk' ? '⚠️ Attention Required' : '✅ Healthy Shamba'}
                 </p>
               </div>
             </div>

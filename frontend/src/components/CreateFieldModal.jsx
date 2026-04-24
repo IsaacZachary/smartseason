@@ -86,7 +86,7 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
             <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--primary-glow)', color: 'var(--primary)' }}>
               <Sprout size={20} />
             </div>
-            Sajili Shamba Jipya
+            Register New Shamba
           </h2>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -103,7 +103,7 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Crop (Mimea)</label>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Crop Type</label>
                 <input 
                   className="glass-input" 
                   placeholder="e.g. Maize / Coffee"
@@ -125,14 +125,14 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
             </div>
 
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Assign Msimamizi (Agent)</label>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Assign Field Agent</label>
               <select 
                 className="glass-input"
                 value={formData.assigned_agent}
                 onChange={e => setFormData({...formData, assigned_agent: e.target.value})}
                 required
               >
-                <option value="">Select msimamizi...</option>
+                <option value="">Select an agent...</option>
                 {agents.map(agent => (
                   <option key={agent.id} value={agent.id}>{agent.first_name} {agent.last_name}</option>
                 ))}
@@ -145,10 +145,10 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
               style={{ width: '100%', justifyContent: 'center', marginTop: '12px' }}
               disabled={loading}
             >
-              {loading ? 'Sajili...' : (
+              {loading ? 'Registering...' : (
                 <>
                   <Save size={18} />
-                  Hifadhi Shamba
+                  Save Shamba
                 </>
               )}
             </button>

@@ -57,7 +57,7 @@ const Login = () => {
             <Sprout size={32} />
           </div>
           <h1 style={{ fontSize: '1.8rem', marginBottom: '8px', background: 'linear-gradient(to right, var(--primary), var(--text-main))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: '700' }}>SmartSeason</h1>
-          <p style={{ color: 'var(--text-muted)' }}>Mfumo wa Mashamba (Kenya Edition)</p>
+          <p style={{ color: 'var(--text-muted)' }}>Shamba Monitoring System</p>
         </div>
 
         {error && (

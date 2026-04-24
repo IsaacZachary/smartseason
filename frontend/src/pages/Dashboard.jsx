@@ -115,15 +115,15 @@ const Dashboard = () => {
       {/* Fields List Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <div>
-          <h2 style={{ fontSize: '1.6rem', marginBottom: '4px' }}>Shamba Monitoring Registry</h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Real-time telemetry and lifecycle tracking for {filteredFields.length} mashamba in progress</p>
+          <h2 style={{ fontSize: '1.6rem', marginBottom: '4px' }}>Shamba Registry</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Real-time telemetry and lifecycle tracking for {filteredFields.length} active shamba plots</p>
         </div>
         <div style={{ display: 'flex', gap: '16px' }}>
           <div style={{ position: 'relative' }}>
             <Search style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={18} />
             <input 
               type="text" 
-              placeholder="Filter by shamba or crop..." 
+              placeholder="Search by shamba or crop..." 
               className="glass-input" 
               style={{ paddingLeft: '44px', width: '320px', background: 'rgba(255,255,255,0.03)' }}
               value={searchTerm}
@@ -137,7 +137,7 @@ const Dashboard = () => {
               style={{ padding: '0 24px', height: '48px', boxShadow: '0 8px 16px var(--primary-glow)' }}
             >
               <Plus size={18} />
-              Sajili Shamba Mpya
+              Register New Shamba
             </button>
           )}
         </div>
