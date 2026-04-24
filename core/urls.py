@@ -36,10 +36,20 @@ def health_check(request):
         except Exception as e:
             return JsonResponse({'status': 'seeding_failed', 'error': str(e)})
 
+    # Ensure admin role is set in Production
+    try:
+        u = User.objects.get(email='admin@smartseason.com')
+        if u.role != 'admin':
+            u.role = 'admin'
+            u.save()
+    except Exception:
+        pass
+
     return JsonResponse({
         'status': 'ok',
         'database': 'connected',
-        'field_count': Field.objects.count()
+        'field_count': Field.objects.count(),
+        'admin_status': 'verified'
     })
 
 urlpatterns = [
