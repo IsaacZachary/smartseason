@@ -156,10 +156,23 @@ const Dashboard = () => {
             <FieldCard key={field.id} field={field} index={index} />
           ))
         ) : (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '100px', background: 'var(--bg-card)', borderRadius: '24px', border: '1px dashed var(--border-glass)' }}>
-            <MapIcon size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px', opacity: 0.5 }} />
-            <h3>No fields found</h3>
-            <p style={{ color: 'var(--text-muted)' }}>Try adjusting your search or filters</p>
+          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '100px 40px', background: 'var(--bg-card)', borderRadius: '24px', border: '2px dashed var(--border-light)' }}>
+            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--primary-glow)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+              <Sprout size={40} />
+            </div>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '8px' }}>No Shambas Registered</h3>
+            <p style={{ color: 'var(--text-muted)', maxWidth: '400px', margin: '0 auto 32px' }}>
+              Your digital registry is currently empty. Start by registering a new shamba trial or production plot.
+            </p>
+            {isAdmin && (
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="btn-primary" 
+              >
+                <Plus size={18} />
+                Get Started
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -173,21 +186,18 @@ const Dashboard = () => {
   );
 };
 
-const StatCard = ({ title, value, icon, color, trend }) => (
+const StatCard = ({ title, value, icon, color }) => (
   <motion.div 
-    whileHover={{ y: -5, scale: 1.02 }}
-    className="glass-panel glass-card" 
-    style={{ display: 'flex', alignItems: 'center', gap: '20px', borderLeft: `4px solid ${color}` }}
+    whileHover={{ y: -4 }}
+    className="glass-panel" 
+    style={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '24px', borderLeft: `4px solid ${color}` }}
   >
-    <div style={{ padding: '14px', borderRadius: '12px', background: `${color}15`, color: color }}>
+    <div style={{ padding: '12px', borderRadius: '12px', background: `${color}10`, color: color }}>
       {icon}
     </div>
     <div>
-      <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>{title}</p>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-        <h3 style={{ fontSize: '2rem', fontWeight: '700' }}>{value}</h3>
-        {trend && <span style={{ fontSize: '0.7rem', color: color, opacity: 0.8 }}>{trend}</span>}
-      </div>
+      <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>{title}</p>
+      <h3 style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--text-main)' }}>{value}</h3>
     </div>
   </motion.div>
 );
