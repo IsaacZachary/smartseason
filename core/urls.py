@@ -7,21 +7,35 @@ def health_check(request):
     from fields.models import Field
     from users.models import User
     from django.utils import timezone
+def health_check(request):
+    from fields.models import Field
+    from users.models import User
+    from django.utils import timezone
     from datetime import timedelta
     
+    # 1. Force verify the admin user
+    try:
+        u = User.objects.get(email='admin@smartseason.com')
+        u.role = 'admin'
+        u.save()
+        admin_status = "verified"
+    except User.DoesNotExist:
+        admin_status = "user_not_found"
+
+    # 2. Seed if empty
     if Field.objects.count() == 0:
         try:
-            admin_user = User.objects.get(email='admin@smartseason.com')
-            agent = User.objects.get(email='agent1@smartseason.com')
+            # Ensure agent exists
+            agent, _ = User.objects.get_or_create(
+                email='agent1@smartseason.com',
+                defaults={'username': 'agent1', 'first_name': 'Field', 'last_name': 'Agent', 'role': 'agent'}
+            )
+            
             data = [
                 {'name': 'Molo Potato Trial', 'crop': 'Potatoes', 'stage': 'growing', 'days': 15},
                 {'name': 'Nakuru Maize Estate', 'crop': 'Maize', 'stage': 'planted', 'days': 2},
                 {'name': 'Eldoret Wheat Block B', 'crop': 'Wheat', 'stage': 'ready', 'days': 60},
-                {'name': 'Kiambu Coffee Plot 4', 'crop': 'Coffee', 'stage': 'growing', 'days': 10},
-                {'name': 'Narok Barley Field', 'crop': 'Barley', 'stage': 'at-risk', 'days': 40},
-                {'name': 'Bomet Tea Estate', 'crop': 'Tea', 'stage': 'growing', 'days': 200},
-                {'name': 'Nyeri Highland Trial', 'crop': 'Coffee', 'stage': 'planted', 'days': 5},
-                {'name': 'Machakos Fruit Farm', 'crop': 'Mangoes', 'stage': 'ready', 'days': 150}
+                {'name': 'Kiambu Coffee Plot 4', 'crop': 'Coffee', 'stage': 'growing', 'days': 10}
             ]
             for d in data:
                 Field.objects.get_or_create(
@@ -29,27 +43,18 @@ def health_check(request):
                     defaults={
                         'crop_type': d['crop'], 
                         'planting_date': timezone.now().date() - timedelta(days=d['days']), 
-                        'current_stage': 'harvested' if d['stage'] == 'ready' else d['stage'], 
+                        'current_stage': d['stage'], 
                         'assigned_agent': agent
                     }
                 )
         except Exception as e:
             return JsonResponse({'status': 'seeding_failed', 'error': str(e)})
 
-    # Ensure admin role is set in Production
-    try:
-        u = User.objects.get(email='admin@smartseason.com')
-        if u.role != 'admin':
-            u.role = 'admin'
-            u.save()
-    except Exception:
-        pass
-
     return JsonResponse({
         'status': 'ok',
-        'database': 'connected',
         'field_count': Field.objects.count(),
-        'admin_status': 'verified'
+        'admin_status': admin_status,
+        'user_role': User.objects.get(email='admin@smartseason.com').role
     })
 
 urlpatterns = [
