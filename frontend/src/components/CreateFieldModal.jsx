@@ -72,51 +72,54 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="glass-panel glass-card"
-          style={{ width: '100%', maxWidth: '500px', position: 'relative' }}
+          className="glass-panel"
+          style={{ width: '100%', maxWidth: '540px', position: 'relative', padding: '40px' }}
         >
           <button 
             onClick={onClose}
-            style={{ position: 'absolute', top: '20px', right: '20px', color: 'var(--text-muted)' }}
+            style={{ position: 'absolute', top: '24px', right: '24px', color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer' }}
           >
             <X size={24} />
           </button>
 
-          <h2 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ padding: '8px', borderRadius: '8px', background: 'var(--primary-glow)', color: 'var(--primary)' }}>
-              <Sprout size={18} />
+          <h2 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '32px', display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{ padding: '10px', borderRadius: '10px', background: 'var(--primary-glow)', color: 'var(--primary)' }}>
+              <Sprout size={22} />
             </div>
             Register Shamba
           </h2>
 
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             <div>
-              <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.75rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Shamba Name</label>
+              <label style={{ display: 'block', marginBottom: '10px', fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Shamba Name</label>
               <input 
                 className="glass-input" 
-                placeholder="e.g. Molo Section A"
+                placeholder="e.g. Molo Highland Trial"
+                style={{ width: '100%', height: '48px' }}
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
                 required
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.75rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Crop Type</label>
+                <label style={{ display: 'block', marginBottom: '10px', fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Crop Type</label>
                 <input 
                   className="glass-input" 
                   placeholder="e.g. Maize"
+                  style={{ width: '100%', height: '48px' }}
                   value={formData.crop_type}
                   onChange={e => setFormData({...formData, crop_type: e.target.value})}
                   required
                 />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.75rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Planting Date</label>
+                <label style={{ display: 'block', marginBottom: '10px', fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Planting Date</label>
                 <input 
                   type="date"
                   className="glass-input" 
+                  style={{ width: '100%', height: '48px' }}
                   value={formData.planting_date}
                   onChange={e => setFormData({...formData, planting_date: e.target.value})}
                   required
@@ -125,9 +128,10 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
             </div>
 
             <div>
-              <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.75rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Field Agent</label>
+              <label style={{ display: 'block', marginBottom: '10px', fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Field Agent</label>
               <select 
                 className="glass-input"
+                style={{ width: '100%', height: '48px' }}
                 value={formData.assigned_agent}
                 onChange={e => setFormData({...formData, assigned_agent: e.target.value})}
                 required
@@ -142,12 +146,12 @@ const CreateFieldModal = ({ isOpen, onClose, onCreated }) => {
             <button 
               type="submit" 
               className="btn-primary" 
-              style={{ width: '100%', justifyContent: 'center', marginTop: '12px' }}
+              style={{ width: '100%', justifyContent: 'center', height: '52px', marginTop: '8px', fontSize: '1rem' }}
               disabled={loading}
             >
               {loading ? 'Saving...' : (
                 <>
-                  <Save size={18} />
+                  <Save size={20} />
                   Save Shamba
                 </>
               )}
