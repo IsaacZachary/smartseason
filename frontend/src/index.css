@@ -13,11 +13,11 @@
 }
 
 body.dark-theme {
-  --bg-page: #0F172A;
-  --bg-card: #1E293B;
+  --bg-page: #0A0A0A;
+  --bg-card: #0D1F17;
   --text-main: #F1F5F9;
-  --text-muted: #94A3B8;
-  --border-glass: #334155;
+  --text-muted: #6EE7B7;
+  --border-glass: #1A3326;
   background-color: var(--bg-page);
   color: var(--text-main);
 }
@@ -29,9 +29,15 @@ body.dark-theme .glass-panel {
 
 body.dark-theme input,
 body.dark-theme select {
-  background: #1E293B;
+  background: #0D1F17;
   color: var(--text-main);
   border-color: var(--border-glass);
+}
+
+body.dark-theme .glass-input {
+  background: #0D1F17;
+  color: #F1F5F9;
+  border-color: #1A3326;
 }
 
 * {
