@@ -7,14 +7,14 @@
       "config": { "distDir": "dist" }
     },
     {
-      "src": "backend/wsgi.py",
+      "src": "index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/_/backend/(.*)",
-      "dest": "backend/wsgi.py"
+      "dest": "index.py"
     },
     {
       "src": "/assets/(.*)",
