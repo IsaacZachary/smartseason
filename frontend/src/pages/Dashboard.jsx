@@ -74,7 +74,7 @@ const Dashboard = () => {
       {/* Header */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px' }}>
         <div>
-          <h1 style={{ fontSize: '2.4rem', fontWeight: '700', marginBottom: '8px', background: 'linear-gradient(to right, #fff, #94A3B8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          <h1 style={{ fontSize: '2.4rem', fontWeight: '700', marginBottom: '8px', background: 'linear-gradient(to right, var(--primary), var(--text-main))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             System Dashboard
           </h1>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
