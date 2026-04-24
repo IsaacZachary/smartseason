@@ -63,6 +63,9 @@ The system proactively assesses the health of every Shamba plot:
 
 ## 👨‍💻 Submission Details
 - **Developer**: Isaac Zachary
+- **Email**: [isaaczachary18@gmail.com](mailto:isaaczachary18@gmail.com)
+- **Portfolio**: [izach.netlify.app](https://izach.netlify.app)
+- **Phone**: +254 759 325 915
 - **Project**: SmartSeason Agricultural Telemetry Platform
 - **Date**: April 2026
 
