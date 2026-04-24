@@ -5,12 +5,15 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import FieldDetail from './pages/FieldDetail';
 
+import logo from './assets/logo.png';
+
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
   
   if (loading) return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0A1628' }}>
-      <div className="animate-fade-in">Loading SmartSeason...</div>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#050B15', gap: '20px' }}>
+      <img src={logo} alt="Loading..." className="animate-spin" style={{ width: '48px', height: '48px', opacity: 0.5 }} />
+      <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', letterSpacing: '0.2em' }}>AUTHENTICATING...</div>
     </div>
   );
   

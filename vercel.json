@@ -9,17 +9,9 @@
     {
       "src": "index.py",
       "use": "@vercel/python"
-    },
-    {
-      "src": "api/health.py",
-      "use": "@vercel/python"
     }
   ],
   "routes": [
-    {
-      "src": "/_/backend/test",
-      "dest": "api/health.py"
-    },
     {
       "src": "/_/backend/(.*)",
       "dest": "index.py"

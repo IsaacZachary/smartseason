@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Sprout, LogIn, AlertCircle } from 'lucide-react';
+import { Sprout, LogIn, AlertCircle, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import heroImage from '../assets/hero.png';
 
+import logo from '../assets/logo.png';
+
 const Login = () => {
-  const [email, setEmail] = useState('admin@smartseason.com');
-  const [password, setPassword] = useState('Admin@123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -21,7 +23,19 @@ const Login = () => {
       await login(email, password);
       navigate('/');
     } catch (err) {
-      setError('Invalid email or password. Please try again.');
+      setError('The credentials provided do not match our records.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setLoading(true);
+    try {
+      await login('admin@smartseason.com', 'Admin@123');
+      navigate('/');
+    } catch (err) {
+      setError('Demo environment is currently unavailable.');
     } finally {
       setLoading(false);
     }
@@ -33,73 +47,73 @@ const Login = () => {
       alignItems: 'center', 
       justifyContent: 'center', 
       minHeight: '100vh',
-      padding: '20px',
-      background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${heroImage})`,
+      padding: '24px',
+      background: `linear-gradient(rgba(5, 11, 21, 0.8), rgba(5, 11, 21, 0.9)), url(${heroImage})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
-      backgroundColor: 'var(--bg-dark)'
     }}>
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="glass-panel glass-card" 
-        style={{ width: '100%', maxWidth: '400px', padding: '40px' }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="glass-panel" 
+        style={{ width: '100%', maxWidth: '440px', padding: '48px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <div style={{ 
             display: 'inline-flex', 
-            padding: '12px', 
-            borderRadius: '12px', 
+            padding: '4px', 
+            borderRadius: '16px', 
             background: 'var(--primary-glow)',
-            color: 'var(--primary)',
-            marginBottom: '16px'
+            marginBottom: '20px'
           }}>
-            <Sprout size={32} />
+            <img src={logo} alt="SmartSeason Logo" style={{ width: '64px', height: '64px', borderRadius: '12px' }} />
           </div>
-          <h1 style={{ fontSize: '1.8rem', marginBottom: '8px', background: 'linear-gradient(to right, var(--primary), var(--text-main))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: '700' }}>SmartSeason</h1>
-          <p style={{ color: 'var(--text-muted)' }}>Shamba Monitoring System</p>
+          <h1 style={{ fontSize: '2rem', fontWeight: '800', letterSpacing: '-0.02em', marginBottom: '8px' }}>SmartSeason</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>Enterprise Shamba Management</p>
         </div>
 
         {error && (
-          <div className="animate-fade-in" style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '12px', 
-            padding: '12px', 
-            background: 'rgba(239, 68, 68, 0.1)', 
-            border: '1px solid rgba(239, 68, 68, 0.2)',
-            borderRadius: '10px',
-            color: '#F87171',
-            marginBottom: '24px',
-            fontSize: '0.9rem'
-          }}>
+          <motion.div 
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '12px', 
+              padding: '14px', 
+              background: 'rgba(239, 68, 68, 0.08)', 
+              border: '1px solid rgba(239, 68, 68, 0.2)',
+              borderRadius: '12px',
+              color: '#F87171',
+              marginBottom: '28px',
+              fontSize: '0.85rem'
+            }}
+          >
             <AlertCircle size={18} />
             {error}
-          </div>
+          </motion.div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: '#fff', fontWeight: '500' }}>Email Address</label>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: '600' }}>Email Address</label>
             <input 
               type="email" 
               className="glass-input" 
-              placeholder="name@example.com"
+              placeholder="e.g. admin@smartseason.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ color: '#fff', background: 'rgba(255,255,255,0.05)' }}
               required
             />
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: '#fff', fontWeight: '500' }}>Password</label>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: '600' }}>Password</label>
             <input 
               type="password" 
               className="glass-input" 
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ color: '#fff', background: 'rgba(255,255,255,0.05)' }}
               required
             />
           </div>
@@ -107,30 +121,50 @@ const Login = () => {
           <button 
             type="submit" 
             className="btn-primary" 
-            style={{ justifyContent: 'center', marginTop: '8px' }}
+            style={{ justifyContent: 'center', height: '52px', fontSize: '1rem' }}
             disabled={loading}
           >
-            {loading ? 'Authenticating...' : (
+            {loading ? 'Processing...' : (
               <>
-                <LogIn size={18} />
-                Sign In
+                <LogIn size={20} />
+                Access Dashboard
               </>
             )}
           </button>
         </form>
 
-        <div style={{ 
-          marginTop: '32px', 
-          padding: '16px', 
-          background: 'rgba(255, 255, 255, 0.1)', 
-          borderRadius: '12px', 
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          backdropFilter: 'blur(4px)'
-        }}>
-          <p style={{ fontSize: '0.8rem', color: '#fff', textAlign: 'center', fontWeight: '500' }}>
-            🚀 Demo: admin@smartseason.com / Admin@123
-          </p>
+        <div style={{ position: 'relative', margin: '40px 0 24px', textAlign: 'center' }}>
+          <hr style={{ border: 'none', borderTop: '1px solid var(--border-glass)' }} />
+          <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'var(--bg-card)', padding: '0 16px', color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: '600' }}>OR CONTINUE WITH</span>
         </div>
+
+        <button 
+          onClick={handleDemoLogin}
+          style={{ 
+            width: '100%', 
+            padding: '14px', 
+            borderRadius: '12px', 
+            background: 'rgba(255,255,255,0.05)', 
+            border: '1px solid var(--border-glass)',
+            color: 'var(--text-main)',
+            fontSize: '0.9rem',
+            fontWeight: '600',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
+            transition: 'var(--transition)'
+          }}
+          className="hover-white"
+        >
+          <ShieldCheck size={18} />
+          Explore as Demo User
+        </button>
+        
+        <p style={{ marginTop: '32px', textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+          By logging in, you agree to our Terms of Service.
+        </p>
       </motion.div>
     </div>
   );

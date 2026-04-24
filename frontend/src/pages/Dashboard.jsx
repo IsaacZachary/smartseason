@@ -24,6 +24,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import CreateFieldModal from '../components/CreateFieldModal';
 
+import logo from '../assets/logo.png';
+
 const Dashboard = () => {
   const { user, logout, isAdmin } = useAuth();
   const [fields, setFields] = useState([]);
@@ -64,7 +66,7 @@ const Dashboard = () => {
 
   if (loading) return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', gap: '20px' }}>
-      <Activity className="animate-spin" size={40} color="var(--primary)" />
+      <img src={logo} alt="Loading..." className="animate-spin" style={{ width: '48px', height: '48px', opacity: 0.5 }} />
       <p style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>SYNCHRONIZING FIELD DATA...</p>
     </div>
   );
@@ -73,10 +75,12 @@ const Dashboard = () => {
     <div style={{ padding: '32px', maxWidth: '1400px', margin: '0 auto' }}>
       {/* Header */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px' }}>
-        <div>
-          <h1 style={{ fontSize: '2.4rem', fontWeight: '700', marginBottom: '8px', background: 'linear-gradient(to right, var(--primary), var(--text-main))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            System Dashboard
-          </h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <img src={logo} alt="SmartSeason Logo" style={{ width: '56px', height: '56px', borderRadius: '12px', border: '1px solid var(--border-glass)' }} />
+          <div>
+            <h1 style={{ fontSize: '2.4rem', fontWeight: '800', marginBottom: '4px', letterSpacing: '-0.03em' }}>
+              Dashboard
+            </h1>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <span style={{ padding: '4px 10px', borderRadius: '6px', background: 'var(--primary-glow)', color: 'var(--primary)', fontSize: '0.75rem', fontWeight: '600' }}>
               {isAdmin ? 'ADMINISTRATOR' : 'FIELD AGENT'}
