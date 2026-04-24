@@ -15,6 +15,7 @@ def health_check(request):
             logger_info.append("Database empty. Creating demo data...")
             # Create Admin
             admin_user = User.objects.create_superuser(
+                username='admin',
                 email='admin@smartseason.com',
                 password='Admin@123',
                 first_name='SmartSeason',
@@ -22,11 +23,12 @@ def health_check(request):
             )
             # Create Agent
             agent_user = User.objects.create_user(
+                username='agent1',
                 email='agent1@smartseason.com',
                 password='Agent@123',
                 first_name='Kuria',
                 last_name='Maina',
-                role='FIELD_AGENT'
+                role='agent' # Matches choices in models.py
             )
             
             # Create Shambas (Kenyan Context)
