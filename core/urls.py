@@ -3,6 +3,8 @@ from django.urls import path, include
 from django.http import JsonResponse
 from django.core.management import call_command
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+from datetime import timedelta
 from fields.models import Field, FieldUpdate
 
 def health_check(request):
@@ -23,43 +25,40 @@ def health_check(request):
             )
 
         logger_info = []
+        today = timezone.now().date()
         
-        # Create Shambas (Kenyan Context)
+        # Create Shambas (Matching your exact model fields)
         shambas = [
             {
-                'name': 'Nakuru North Shamba',
-                'location': 'Nakuru',
+                'name': 'Nakuru North Shamba (Maize)',
                 'crop_type': 'Maize',
-                'size_acres': 15.5,
-                'status': 'ACTIVE'
+                'planting_date': today - timedelta(days=10),
+                'current_stage': 'planted'
             },
             {
-                'name': 'Eldoret East Farm',
-                'location': 'Eldoret',
+                'name': 'Eldoret East Estate (Wheat)',
                 'crop_type': 'Wheat',
-                'size_acres': 25.0,
-                'status': 'AT_RISK'
+                'planting_date': today - timedelta(days=45), # Will show as At Risk due to delay
+                'current_stage': 'growing'
             },
             {
-                'name': 'Kiambu Coffee Estate',
-                'location': 'Kiambu',
+                'name': 'Kiambu Coffee Plot',
                 'crop_type': 'Coffee',
-                'size_acres': 10.0,
-                'status': 'ACTIVE'
+                'planting_date': today - timedelta(days=5),
+                'current_stage': 'planted'
             }
         ]
         
         created_count = 0
         for s in shambas:
             obj, created = Field.objects.get_or_create(name=s['name'], defaults={
-                'owner': admin_user, 
                 'assigned_agent': agent_user, 
                 **s
             })
             if created:
                 created_count += 1
         
-        logger_info.append(f"Injected {created_count} Kenyan Shambas.")
+        logger_info.append(f"Injected {created_count} Kenyan Shambas matching your model.")
         user_count = User.objects.count()
         field_count = Field.objects.count()
 
@@ -69,7 +68,7 @@ def health_check(request):
             "user_count": user_count,
             "field_count": field_count,
             "logs": logger_info,
-            "message": "SmartSeason is fully populated!"
+            "message": "SmartSeason is correctly populated!"
         })
     except Exception as e:
         return JsonResponse({
