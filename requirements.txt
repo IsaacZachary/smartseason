@@ -1,3 +1,4 @@
+setuptools
 django==4.2.19
 djangorestframework==3.14.0
 django-cors-headers==4.2.0
@@ -9,4 +10,3 @@ dj-database-url==2.1.0
 asgiref==3.7.2
 sqlparse==0.4.4
 tzdata==2024.1
-setuptools
