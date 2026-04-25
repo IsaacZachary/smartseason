@@ -12,8 +12,8 @@ URL: [https://smartseason-rouge.vercel.app](https://smartseason-rouge.vercel.app
 
 | Role | Email | Password |
 | :--- | :--- | :--- |
-| Administrator | admin@smartseason.com | admin123 |
-| Field Agent | agent1@smartseason.com | agent123 |
+| Administrator | admin@smartseason.com | Admin@123 |
+| Field Agent | agent1@smartseason.com | Agent@123 |
 
 ---
 
